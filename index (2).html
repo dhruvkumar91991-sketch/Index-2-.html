@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>गणित गुरु – कक्षा 10 UP Board गणित</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--p:#4338CA;--p-l:#818CF8;--p-d:#312E81;
+--s:#7C3AED;--s-l:#A78BFA;
+--acc:#06B6D4;--ok:#059669;--warn:#D97706;--err:#DC2626;
+--g1:linear-gradient(135deg,#4338CA,#7C3AED);
+--g2:linear-gradient(135deg,#06B6D4,#4338CA);
+--g3:linear-gradient(135deg,#7C3AED,#EC4899);
+--gh:linear-gradient(160deg,#0f0a2e 0%,#1e1b4b 35%,#312e81 65%,#3b0764 100%);
+--bg:#fff;--bg2:#F8FAFC;--bg3:#F1F5F9;
+--card:#fff;--tx:#0F172A;--tx2:#475569;--tx3:#94A3B8;
+--bd:#E2E8F0;
+--sh:0 1px 3px rgba(0,0,0,.08),0 4px 14px rgba(0,0,0,.06);
+--sh2:0 4px 20px rgba(0,0,0,.1);
+--sh3:0 12px 40px rgba(0,0,0,.12);
+--r:14px;--r2:20px;--rf:9999px;
+--f:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
+--tr:.3s cubic-bezier(.4,0,.2,1)
+}
+[data-theme="dark"]{
+--bg:#0B1120;--bg2:#111827;--bg3:#1E293B;
+--card:#1E293B;--tx:#F1F5F9;--tx2:#94A3B8;--tx3:#64748B;
+--bd:#334155;
+--sh:0 1px 3px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.2);
+--sh2:0 4px 20px rgba(0,0,0,.35);
+--sh3:0 12px 40px rgba(0,0,0,.4)
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.7;overflow-x:hidden;transition:background var(--tr),color var(--tr)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+img{max-width:100%}
+::selection{background:var(--p-l);color:#fff}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--tx3);border-radius:3px}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;height:64px;background:var(--bg);border-bottom:1px solid var(--bd);z-index:900;transition:all var(--tr)}
+[data-theme="dark"] .nav{background:rgba(11,17,32,.92);backdrop-filter:blur(12px)}
+.nav-inner{max-width:1320px;margin:0 auto;padding:0 20px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;cursor:pointer}
+.brand-ico{width:38px;height:38px;background:var(--g1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;font-weight:900}
+.brand b{color:var(--p)}
+.nav-links{display:flex;gap:2px;align-items:center}
+.nl{padding:8px 14px;border-radius:var(--rf);font-size:.84rem;font-weight:500;color:var(--tx2);transition:all var(--tr);background:none;white-space:nowrap}
+.nl:hover,.nl.act{color:var(--p);background:rgba(67,56,202,.08)}
+.nl.act{font-weight:600}
+.nav-r{display:flex;align-items:center;gap:8px}
+.tbtn{width:38px;height:38px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:1.15rem;transition:all var(--tr)}
+.tbtn:hover{transform:scale(1.1)}
+[data-theme="light"] .tbtn .sun{display:none}
+[data-theme="dark"] .tbtn .moon{display:none}
+.ham{display:none;width:38px;height:38px;border-radius:10px;background:var(--bg2);flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.ham span{width:20px;height:2px;background:var(--tx);border-radius:2px;transition:all var(--tr)}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mob-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:898}
+.mob-ov.show{display:block}
+
+@media(max-width:960px){
+.nav-links{position:fixed;top:64px;right:-290px;width:270px;height:calc(100vh - 64px);background:var(--bg);flex-direction:column;padding:20px;gap:4px;transition:right .3s;z-index:899;box-shadow:var(--sh3);overflow-y:auto;align-items:stretch}
+.nav-links.open{right:0}
+.nl{padding:12px 16px;border-radius:var(--r);text-align:left}
+.ham{display:flex}
+}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;border-radius:var(--r);font-weight:600;font-size:.92rem;transition:all var(--tr);position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);opacity:0;transition:opacity .2s}
+.btn:hover::after{opacity:1}
+.btn-p{background:var(--g1);color:#fff;box-shadow:0 4px 16px rgba(67,56,202,.3)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(67,56,202,.4)}
+.btn-s{background:var(--bg2);color:var(--tx);border:1px solid var(--bd)}
+.btn-s:hover{border-color:var(--p-l);background:var(--bg3)}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-lg{padding:14px 32px;font-size:1.05rem;border-radius:var(--r2)}
+.btn-full{width:100%}
+
+/* ===== SECTIONS ===== */
+.sec{padding:70px 20px;max-width:1280px;margin:0 auto}
+.sec-t{font-size:2rem;font-weight:800;text-align:center;margin-bottom:8px}
+.sec-s{text-align:center;color:var(--tx2);margin-bottom:40px;font-size:1.05rem}
+.grad{background:linear-gradient(135deg,var(--p-l),var(--acc),var(--s-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;background:var(--gh);overflow:hidden;padding:40px 20px}
+.hero-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sym{position:absolute;color:rgba(255,255,255,.045);font-weight:800;animation:drift 25s linear infinite}
+.sym:nth-child(1){top:8%;left:4%;font-size:5rem;animation-duration:28s}
+.sym:nth-child(2){top:22%;right:8%;font-size:4rem;animation-delay:-4s;animation-duration:22s}
+.sym:nth-child(3){bottom:25%;left:15%;font-size:6rem;animation-delay:-8s;animation-duration:30s}
+.sym:nth-child(4){top:55%;right:18%;font-size:3.5rem;animation-delay:-12s;animation-duration:24s}
+.sym:nth-child(5){bottom:8%;right:35%;font-size:5rem;animation-delay:-6s;animation-duration:26s}
+.sym:nth-child(6){top:40%;left:40%;font-size:4.5rem;animation-delay:-15s;animation-duration:32s}
+.sym:nth-child(7){bottom:40%;left:55%;font-size:3rem;animation-delay:-20s;animation-duration:20s}
+.sym:nth-child(8){top:12%;left:65%;font-size:4rem;animation-delay:-10s;animation-duration:27s}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-18px) rotate(3deg)}50%{transform:translateY(5px) rotate(-2deg)}75%{transform:translateY(15px) rotate(4deg)}}
+/* floating geometric shapes */
+.shape{position:absolute;border:2px solid rgba(255,255,255,.06);animation:spin 40s linear infinite}
+.shape.circle{width:120px;height:120px;border-radius:50%;top:15%;left:75%}
+.shape.tri{width:0;height:0;border:none;border-left:50px solid transparent;border-right:50px solid transparent;border-bottom:86px solid rgba(255,255,255,.04);top:65%;left:8%;animation-duration:35s}
+.shape.sq{width:80px;height:80px;top:75%;right:12%;animation-duration:45s;border-radius:4px}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.hero-c{text-align:center;color:#fff;max-width:780px;z-index:1}
+.hero-badge{display:inline-block;padding:6px 20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rf);font-size:.85rem;margin-bottom:24px;backdrop-filter:blur(8px)}
+.hero h1{font-size:3.2rem;font-weight:900;line-height:1.2;margin-bottom:14px}
+.hero-sub{font-size:1.2rem;opacity:.88;margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
+.hero-btns .btn-p{background:#fff;color:var(--p-d)}
+.hero-btns .btn-s{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25);backdrop-filter:blur(8px)}
+.hero-btns .btn-s:hover{background:rgba(255,255,255,.2)}
+.hero-nums{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+.h-num{text-align:center}
+.h-num b{display:block;font-size:2rem;font-weight:900}
+.h-num span{font-size:.82rem;opacity:.65}
+@media(max-width:640px){
+.hero h1{font-size:2rem}
+.hero-sub{font-size:1rem}
+.hero-btns{flex-direction:column;align-items:center}
+.hero-btns .btn{width:100%;max-width:280px}
+.hero-nums{gap:24px}
+.h-num b{font-size:1.5rem}
+}
+
+/* ===== PAGE SECTIONS (hidden by default) ===== */
+.pg{display:none;padding-top:64px;min-height:100vh;animation:fadeUp .4s ease}
+.pg.act{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PAGE HEAD ===== */
+.ph{text-align:center;padding:44px 20px 30px;background:var(--bg2)}
+.ph h1{font-size:2rem;font-weight:800;margin-bottom:6px}
+.ph p{color:var(--tx2);font-size:1.05rem}
+
+/* ===== CHAPTER CARDS ===== */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px;padding:20px;max-width:1280px;margin:0 auto}
+.ch-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:24px;position:relative;overflow:hidden;transition:all var(--tr)}
+.ch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g1)}
+.ch-card:hover{transform:translateY(-5px);box-shadow:var(--sh3)}
+.ch-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.ch-n{width:36px;height:36px;background:var(--g1);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0}
+.ch-card h3{font-size:1.05rem;font-weight:700}
+.ch-card .ch-hi{font-size:.82rem;color:var(--p);margin-bottom:6px}
+.ch-card .ch-desc{font-size:.84rem;color:var(--tx2);margin-bottom:16px;line-height:1.7}
+.ch-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.ch-tag{padding:3px 10px;background:rgba(67,56,202,.07);color:var(--p);border-radius:var(--rf);font-size:.7rem;font-weight:600}
+
+/* ===== FEATURES ===== */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feat{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:28px;text-align:center;transition:all var(--tr);cursor:pointer}
+.feat:hover{transform:translateY(-6px);box-shadow:var(--sh3);border-color:var(--p-l)}
+.feat-ico{font-size:2.8rem;margin-bottom:12px}
+.feat h3{font-size:1.05rem;margin-bottom:6px}
+.feat p{font-size:.84rem;color:var(--tx2)}
+
+/* ===== CHAPTER DETAIL ===== */
+.cd-head{background:var(--g1);color:#fff;padding:44px 20px;text-align:center}
+.cd-head h1{font-size:1.9rem;margin-bottom:6px}
+.cd-head p{opacity:.85;max-width:600px;margin:0 auto}
+.cd-tabs{display:flex;gap:3px;padding:14px 16px;max-width:1000px;margin:0 auto;overflow-x:auto;border-bottom:1px solid var(--bd)}
+.ct{padding:9px 16px;border-radius:10px;background:none;color:var(--tx2);font-size:.82rem;font-weight:500;white-space:nowrap;transition:all .2s}
+.ct.act{background:var(--p);color:#fff}
+.ct:hover:not(.act){background:var(--bg2)}
+.cd-body{max-width:880px;margin:0 auto;padding:28px 20px}
+.cd-nav{display:flex;justify-content:space-between;max-width:880px;margin:0 auto;padding:20px;border-top:1px solid var(--bd)}
+
+/* Notes styling */
+.nt h3{font-size:1.2rem;margin:22px 0 10px;color:var(--p)}
+.nt p{margin-bottom:12px;line-height:1.85}
+.nt ul,.nt ol{margin:8px 0 14px 22px}
+.nt li{margin-bottom:6px}
+.fb{background:var(--bg2);border:1px solid var(--bd);border-left:4px solid var(--p);border-radius:var(--r);padding:14px 18px;margin:14px 0}
+.fb .fm{font-weight:700;color:var(--p);font-size:1.05rem;margin-bottom:3px}
+.eb{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin:14px 0}
+.eb h4{color:var(--p);margin-bottom:10px}
+.step{margin:7px 0;padding-left:14px;border-left:2px solid var(--p-l)}
+
+/* ===== QUIZ ===== */
+.quiz-wrap{max-width:780px;margin:0 auto;padding:28px 20px}
+.qc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:28px;margin-bottom:20px}
+.qn{font-size:.82rem;color:var(--p);font-weight:700;margin-bottom:6px}
+.qt{font-size:1.05rem;font-weight:600;margin-bottom:18px;line-height:1.7}
+.qo{display:flex;flex-direction:column;gap:10px}
+.qo-item{padding:13px 18px;border:2px solid var(--bd);border-radius:var(--r);cursor:pointer;transition:all .2s;font-size:.92rem}
+.qo-item:hover{border-color:var(--p-l);background:rgba(67,56,202,.03)}
+.qo-item.sel{border-color:var(--p);background:rgba(67,56,202,.08);font-weight:500}
+.qo-item.ok{border-color:var(--ok);background:rgba(5,150,105,.08)}
+.qo-item.no{border-color:var(--err);background:rgba(220,38,38,.08)}
+.qo-item.dis{pointer-events:none}
+.qfb{margin-top:14px;padding:12px 16px;border-radius:var(--r);font-size:.88rem;display:none}
+.qfb.show{display:block}
+.timer-row{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.pbar{width:100%;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden}
+.pfill{height:100%;background:var(--g1);border-radius:4px;transition:width .4s}
+.timer{font-weight:700;color:var(--tx2);white-space:nowrap;font-size:1rem}
+
+/* ===== RESULT ===== */
+.res{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:36px;text-align:center;max-width:680px;margin:0 auto}
+.res-sc{font-size:3.8rem;font-weight:900;color:var(--p);margin-bottom:4px}
+.res-lb{font-size:1.15rem;color:var(--tx2);margin-bottom:22px}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-bottom:26px}
+.rs{padding:16px;background:var(--bg2);border-radius:var(--r)}
+.rs b{display:block;font-size:1.5rem;font-weight:800;color:var(--p)}
+.rs span{font-size:.78rem;color:var(--tx2)}
+.res-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ===== FORMULA SECTION ===== */
+.fm-sec{max-width:1200px;margin:0 auto;padding:0 20px 20px;display:flex;flex-direction:column;gap:24px}
+.fm-ch{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.fm-ch-h{padding:18px 22px;background:var(--bg2);border-bottom:1px solid var(--bd);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:1.02rem}
+.fm-ch-h .arr{transition:transform .2s;font-size:.8rem}
+.fm-ch-h.col .arr{transform:rotate(-90deg)}
+.fm-items{padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.fm-item{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.fm-item .ft{font-weight:600;font-size:.95rem;color:var(--p)}
+.fm-item .fd{font-size:.78rem;color:var(--tx3);margin-top:2px}
+.fm-cp{width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:.75rem;cursor:pointer;flex-shrink:0;transition:all .2s}
+.fm-cp:hover{border-color:var(--p);color:var(--p)}
+.fm-search{max-width:520px;margin:0 auto 20px;padding:0 20px}
+.fm-search input{width:100%;padding:13px 20px;border:2px solid var(--bd);border-radius:var(--r2);background:var(--card);color:var(--tx);font-size:.95rem;transition:border-color .2s}
+.fm-search input:focus{outline:none;border-color:var(--p)}
+
+/* ===== IMPORTANT Q ===== */
+.iq-list{max-width:1000px;margin:0 auto;padding:0 20px 20px;display:flex;flex-direction:column;gap:14px}
+.iq{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:22px}
+.iq-badge{display:inline-block;padding:3px 12px;border-radius:var(--rf);font-size:.72rem;font-weight:700;margin-bottom:8px}
+.iq-v{background:rgba(220,38,38,.08);color:var(--err)}
+.iq-i{background:rgba(217,119,6,.08);color:var(--warn)}
+.iq-b{background:rgba(67,56,202,.08);color:var(--p)}
+.iq-t{font-size:.95rem;line-height:1.7}
+.iq-ch{font-size:.78rem;color:var(--tx3);margin-top:8px}
+
+/* ===== PYQ ===== */
+.pyq-f{display:flex;gap:10px;padding:16px 20px;max-width:1100px;margin:0 auto;flex-wrap:wrap;align-items:center}
+.pyq-f select{padding:10px 14px;border:2px solid var(--bd);border-radius:var(--r);background:var(--card);color:var(--tx);font-size:.88rem;min-width:140px}
+.pyq-f select:focus{outline:none;border-color:var(--p)}
+.pyq-l{max-width:1100px;margin:0 auto;padding:0 20px 20px;display:flex;flex-direction:column;gap:14px}
+.pyq-c{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:22px;transition:all .2s}
+.pyq-c:hover{box-shadow:var(--sh)}
+.pyq-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.badge{padding:3px 10px;border-radius:var(--rf);font-size:.72rem;font-weight:700}
+.b-imp{background:rgba(217,119,6,.08);color:var(--warn)}
+.b-rep{background:rgba(220,38,38,.08);color:var(--err)}
+.b-brd{background:rgba(67,56,202,.08);color:var(--p)}
+.pyq-meta{font-size:.78rem;color:var(--tx3);margin-bottom:8px}
+.pyq-sol{display:none;padding:14px;background:var(--bg2);border-radius:var(--r);margin-top:10px;font-size:.88rem;line-height:1.7}
+.pyq-sol.show{display:block}
+
+/* ===== ABOUT ===== */
+.about-wrap{max-width:800px;margin:0 auto;padding:40px 20px}
+.about-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:36px;margin-bottom:24px}
+.about-card h3{font-size:1.2rem;margin-bottom:10px;color:var(--p)}
+.about-card p{color:var(--tx2);line-height:1.8;margin-bottom:10px}
+.about-list{list-style:none;padding:0}
+.about-list li{padding:8px 0;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;font-size:.92rem}
+.about-list li:last-child{border-bottom:none}
+
+/* ===== PROGRESS ===== */
+.prog-wrap{max-width:1000px;margin:0 auto;padding:28px 20px}
+.prog-main{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:30px;text-align:center;margin-bottom:24px}
+.prog-main h3{font-size:1.25rem;margin-bottom:18px}
+.prog-bar-lg{width:100%;height:26px;background:var(--bg2);border-radius:13px;overflow:hidden;margin-bottom:10px}
+.prog-fill-lg{height:100%;background:var(--g1);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:#fff;font-size:.8rem;font-weight:800;transition:width 1s ease}
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.pg-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:20px}
+.pg-card h4{font-size:.82rem;color:var(--tx2);margin-bottom:8px}
+.pg-val{font-size:2.2rem;font-weight:900;color:var(--p)}
+.pg-lbl{font-size:.78rem;color:var(--tx3)}
+
+/* ===== TOAST ===== */
+.toast-box{position:fixed;top:76px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--card);color:var(--tx);padding:12px 20px;border-radius:var(--r);box-shadow:var(--sh2);border-left:4px solid var(--p);animation:tslide .3s ease;font-size:.88rem}
+@keyframes tslide{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ===== FOOTER ===== */
+footer{background:var(--bg2);border-top:1px solid var(--bd);padding:44px 20px 20px;margin-top:40px}
+.foot-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-bottom:30px}
+@media(max-width:700px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand p{color:var(--tx2);font-size:.85rem;margin-top:8px;line-height:1.7}
+.foot-col h4{font-size:.9rem;margin-bottom:12px}
+.foot-col a{display:block;color:var(--tx2);font-size:.85rem;margin-bottom:8px;transition:color .2s}
+.foot-col a:hover{color:var(--p)}
+.foot-bot{border-top:1px solid var(--bd);padding-top:16px;text-align:center}
+.foot-bot p{color:var(--tx3);font-size:.8rem}
+
+/* Accessibility */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+*:focus-visible{outline:3px solid var(--p);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast-box" id="toastBox"></div>
+
+<!-- Navbar -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<div class="brand" onclick="go('home')">
+<div class="brand-ico">π</div>
+<div>गणित <b>गुरु</b></div>
+</div>
+<div class="nav-links" id="navLinks">
+<button class="nl act" data-pg="home" onclick="go('home')">🏠 होम</button>
+<button class="nl" data-pg="chapters" onclick="go('chapters')">📚 अध्याय</button>
+<button class="nl" data-pg="notes" onclick="go('notes')">📖 नोट्स</button>
+<button class="nl" data-pg="formulas" onclick="go('formulas')">🧮 सूत्र</button>
+<button class="nl" data-pg="quiz" onclick="go('quiz')">📝 क्विज़</button>
+<button class="nl" data-pg="important" onclick="go('important')">🎯 महत्वपूर्ण प्रश्न</button>
+<button class="nl" data-pg="pyq" onclick="go('pyq')">📋 PYQ</button>
+<button class="nl" data-pg="about" onclick="go('about')">ℹ️ हमारे बारे में</button>
+</div>
+<div class="nav-r">
+<button class="tbtn" onclick="toggleTheme()" aria-label="थीम बदलें">
+<span class="moon">🌙</span><span class="sun">☀️</span>
+</button>
+<button class="ham" id="ham" onclick="toggleMenu()" aria-label="मेनू">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+</nav>
+<div class="mob-ov" id="mobOv" onclick="toggleMenu()"></div>
+
+<main>
+
+<!-- ===== HOME ===== -->
+<div class="pg act" id="pg-home">
+<div class="hero">
+<div class="hero-fx">
+<span class="sym">∫</span><span class="sym">π</span><span class="sym">∑</span><span class="sym">√x</span><span class="sym">∞</span><span class="sym">Δ</span><span class="sym">θ</span><span class="sym">α²</span>
+<div class="shape circle"></div>
+<div class="shape tri"></div>
+<div class="shape sq"></div>
+</div>
+<div class="hero-c">
+<div class="hero-badge">🎯 UP Board 2025-26</div>
+<h1>कक्षा 10 गणित<br><span class="grad">UP Board</span></h1>
+<p class="hero-sub">गणित समझें, अभ्यास करें और परीक्षा में बेहतर अंक प्राप्त करें।</p>
+<div class="hero-btns">
+<button class="btn btn-p btn-lg" onclick="go('chapters')">📚 पढ़ना शुरू करें</button>
+<button class="btn btn-s btn-lg" onclick="go('chapters')">📖 अध्याय देखें</button>
+</div>
+<div class="hero-nums">
+<div class="h-num"><b>15</b><span>अध्याय</span></div>
+<div class="h-num"><b>500+</b><span>प्रश्न</span></div>
+<div class="h-num"><b>200+</b><span>सूत्र</span></div>
+<div class="h-num"><b>MCQ</b><span>क्विज़</span></div>
+</div>
+</div>
+</div>
+<!-- Features -->
+<div class="sec">
+<h2 class="sec-t">सब कुछ जो आपको <span class="grad">चाहिए</span></h2>
+<p class="sec-s">UP Board कक्षा 10 गणित की सम्पूर्ण तैयारी</p>
+<div class="feat-grid" id="featGrid"></div>
+</div>
+<!-- Quick Chapters -->
+<div class="sec">
+<h2 class="sec-t">लोकप्रिय <span class="grad">अध्याय</span></h2>
+<div id="quickCh" style="display:flex;gap:16px;overflow-x:auto;padding:16px 0;scroll-snap-type:x mandatory"></div>
+<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="go('chapters')">सभी अध्याय देखें →</button></div>
+</div>
+<!-- Motivation -->
+<div class="sec">
+<div style="max-width:700px;margin:0 auto;background:var(--g1);border-radius:var(--r2);padding:40px;text-align:center;color:#fff">
+<div style="font-size:2.8rem;margin-bottom:12px">🌟</div>
+<h2 style="font-size:1.5rem;margin-bottom:10px">"हर छात्र बन सकता है गणित का टॉपर!"</h2>
+<p style="opacity:.85;margin-bottom:22px">नियमित अभ्यास + सही रणनीति = बोर्ड परीक्षा में सफलता</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+<div style="padding:8px 18px;background:rgba(255,255,255,.15);border-radius:var(--rf);font-size:.88rem">📅 रोज़ 1 घंटा अभ्यास</div>
+<div style="padding:8px 18px;background:rgba(255,255,255,.15);border-radius:var(--rf);font-size:.88rem">📝 पिछले वर्ष के प्रश्न हल करें</div>
+<div style="padding:8px 18px;background:rgba(255,255,255,.15);border-radius:var(--rf);font-size:.88rem">🧠 रटें नहीं, समझें</div>
+<div style="padding:8px 18px;background:rgba(255,255,255,.15);border-radius:var(--rf);font-size:.88rem">🔄 सूत्रों की साप्ताहिक पुनरावृत्ति</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== CHAPTERS ===== -->
+<div class="pg" id="pg-chapters">
+<div class="ph"><h1>📚 सभी अध्याय</h1><p>कक्षा 10 UP Board गणित – पूर्ण पाठ्यक्रम</p></div>
+<div id="chFilter" style="display:flex;gap:8px;padding:16px 20px;max-width:1280px;margin:0 auto;flex-wrap:wrap;justify-content:center"></div>
+<div class="ch-grid" id="chGrid"></div>
+</div>
+
+<!-- ===== CHAPTER DETAIL ===== -->
+<div class="pg" id="pg-detail">
+<div class="cd-head" id="cdHead"></div>
+<div class="cd-tabs" id="cdTabs"></div>
+<div class="cd-body" id="cdBody"></div>
+<div class="cd-nav">
+<button class="btn btn-s" id="prevCh" onclick="navCh(-1)">← पिछला अध्याय</button>
+<button class="btn btn-p" id="nextCh" onclick="navCh(1)">अगला अध्याय →</button>
+</div>
+</div>
+
+<!-- ===== NOTES ===== -->
+<div class="pg" id="pg-notes">
+<div class="ph"><h1>📖 अध्यायवार नोट्स</h1><p>हर अध्याय के विस्तृत नोट्स पढ़ें</p></div>
+<div class="ch-grid" id="notesGrid"></div>
+</div>
+
+<!-- ===== FORMULAS ===== -->
+<div class="pg" id="pg-formulas">
+<div class="ph"><h1>🧮 महत्वपूर्ण सूत्र</h1><p>सभी अध्यायों के प्रमुख सूत्र – एक जगह</p></div>
+<div class="fm-search"><input type="text" id="fmSearch" placeholder="🔍 सूत्र खोजें..." oninput="searchFm()"></div>
+<div class="fm-sec" id="fmSec"></div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div class="pg" id="pg-quiz">
+<div class="ph"><h1>📝 MCQ क्विज़</h1><p>अपनी तैयारी जाँचें – अध्यायवार क्विज़</p></div>
+<div class="quiz-wrap" id="quizSetup">
+<div class="ch-grid" id="quizGrid" style="padding:0;max-width:100%"></div>
+</div>
+<div class="quiz-wrap" id="quizArea" style="display:none"></div>
+</div>
+
+<!-- ===== IMPORTANT Q ===== -->
+<div class="pg" id="pg-important">
+<div class="ph"><h1>🎯 महत्वपूर्ण प्रश्न</h1><p>बोर्ड परीक्षा के लिए ज़रूरी प्रश्न</p></div>
+<div class="iq-list" id="iqList"></div>
+</div>
+
+<!-- ===== PYQ ===== -->
+<div class="pg" id="pg-pyq">
+<div class="ph"><h1>📋 पिछले वर्षों के प्रश्न</h1><p>UP Board कक्षा 10 गणित – वर्षवार PYQ</p></div>
+<div class="pyq-f" id="pyqF"></div>
+<div class="pyq-l" id="pyqL"></div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<div class="pg" id="pg-about">
+<div class="ph"><h1>ℹ️ हमारे बारे में</h1><p>गणित गुरु – कक्षा 10 UP Board</p></div>
+<div class="about-wrap">
+<div class="about-card">
+<h3>📖 गणित गुरु क्या है?</h3>
+<p>गणित गुरु एक शैक्षिक मंच है जो विशेष रूप से UP Board कक्षा 10 के गणित छात्रों के लिए बनाया गया है। यहाँ आपको अध्यायवार नोट्स, महत्वपूर्ण सूत्र, हल किए हुए प्रश्न, MCQ क्विज़, और पिछले वर्षों के प्रश्न मिलेंगे।</p>
+</div>
+<div class="about-card">
+<h3>🎯 हमारा उद्देश्य</h3>
+<p>हर छात्र को गणित सरल और रोचक तरीके से सिखाना ताकि वे बोर्ड परीक्षा में उत्कृष्ट अंक प्राप्त कर सकें।</p>
+<ul class="about-list">
+<li>📚 सरल हिंदी में विस्तृत नोट्स</li>
+<li>🧮 सभी महत्वपूर्ण सूत्र एक जगह</li>
+<li>✏️ स्टेप-बाय-स्टेप हल</li>
+<li>📝 Interactive MCQ क्विज़</li>
+<li>📋 पिछले वर्षों के प्रश्नपत्र</li>
+<li>🎯 बोर्ड परीक्षा के लिए महत्वपूर्ण प्रश्न</li>
+</ul>
+</div>
+<div class="about-card">
+<h3>📧 संपर्क</h3>
+<p>यदि आपको कोई सुझाव या समस्या है, तो हमसे संपर्क करें।</p>
+<p><strong>ईमेल:</strong> help@ganitguru.example.com</p>
+</div>
+</div>
+</div>
+
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="foot-grid">
+<div class="foot-brand">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.15rem"><div class="brand-ico" style="width:30px;height:30px;font-size:1rem">π</div>गणित गुरु</div>
+<p>UP Board कक्षा 10 गणित की स्मार्ट तैयारी। पढ़ें, अभ्यास करें और 90+ अंक प्राप्त करें!</p>
+</div>
+<div class="foot-col"><h4>त्वरित लिंक</h4><a href="#" onclick="go('home')">होम</a><a href="#" onclick="go('chapters')">अध्याय</a><a href="#" onclick="go('notes')">नोट्स</a><a href="#" onclick="go('quiz')">क्विज़</a></div>
+<div class="foot-col"><h4>संसाधन</h4><a href="#" onclick="go('formulas')">सूत्र</a><a href="#" onclick="go('important')">महत्वपूर्ण प्रश्न</a><a href="#" onclick="go('pyq')">PYQ</a><a href="#" onclick="go('about')">हमारे बारे में</a></div>
+<div class="foot-col"><h4>अन्य</h4><a href="#" onclick="toast('गोपनीयता नीति जल्द आएगी!')">गोपनीयता नीति</a><a href="#" onclick="toast('नियम जल्द आएँगे!')">नियम एवं शर्तें</a><a href="#" onclick="toast('अस्वीकरण जल्द आएगा!')">अस्वीकरण</a></div>
+</div>
+<div class="foot-bot"><p>© 2025 गणित गुरु। UP Board छात्रों के लिए ❤️ से बनाया गया।</p></div>
+</footer>
+
+<script>
+// ===== DATA =====
+var C=[
+{id:0,n:1,nm:"वास्तविक संख्याएँ",cat:"algebra",desc:"यूक्लिड विभाजन प्रमेयिका, अंकगणित की आधारभूत प्रमेय, अपरिमेय संख्याएँ।",tags:["यूक्लिड","HCF-LCM","अपरिमेय"],
+notes:'<h3>1. यूक्लिड विभाजन प्रमेयिका</h3><p>किन्हीं दो धनात्मक पूर्णांकों a और b के लिए, अद्वितीय पूर्णांक q और r इस प्रकार विद्यमान हैं:</p><div class="fb"><div class="fm">a = bq + r, जहाँ 0 ≤ r < b</div></div><h3>2. यूक्लिड विभाजन एल्गोरिथम (HCF ज्ञात करना)</h3><ol><li>bade number ko chhote se bhago</li><li>शेषफल 0 हो तो भाजक = HCF</li><li>शेषफल ≠ 0 हो तो भाजक और शेषफल पर दोहराओ</li></ol><h3>3. अंकगणित की आधारभूत प्रमेय</h3><p>प्रत्येक भाज्य संख्या को अभाज्य गुणनखंडों के गुणनफल के रूप में व्यक्त किया जा सकता है।</p><div class="fb"><div class="fm">उदाहरण: 156 = 2² × 3 × 13</div></div><h3>4. HCF × LCM = दोनों संख्याओं का गुणनफल</h3><h3>5. अपरिमेय संख्याएँ</h3><p>वे संख्याएँ जिन्हें p/q के रूप में नहीं लिखा जा सकता। उदा: √2, √3, π</p>',
+fm:[{t:"a = bq + r, 0 ≤ r < b",d:"यूक्लिड प्रमेयिका"},{t:"HCF × LCM = a × b",d:"HCF-LCM संबंध"},{t:"2ⁿ × 5ᵐ",d:"सांत दशमलव का हर"}],
+ex:[{ti:"HCF(135, 225) ज्ञात कीजिए",st:["225 = 135 × 1 + 90","135 = 90 × 1 + 45","90 = 45 × 2 + 0","शेषफल = 0, अतः HCF = 45"],an:"HCF = 45"}],
+mcq:[{q:"दो क्रमागत सम संख्याओं का HCF:",o:["1","2","0","कोई नहीं"],c:1,e:"दोनों 2 से भाज्य, HCF=2"},{q:"HCF(336,54)=6 हो तो LCM=?",o:["3024","3042","3204","3240"],c:0,e:"(336×54)/6=3024"},{q:"अपरिमेय संख्या कौन?",o:["22/7","0.333...","√5","1.414"],c:2,e:"√5 को p/q में नहीं लिख सकते"},{q:"17/8 का दशमलव:",o:["सांत","असांत आवर्ती","असांत अनावर्ती","कोई नहीं"],c:0,e:"8=2³, सांत: 2.125"},{q:"यूक्लिड प्रमेयिका:",o:["a=bq+r,r≥b","a=bq+r,0≤r<b","a=b+q+r","a=bq-r"],c:1,e:"0 ≤ r < b"}],
+imp:[{b:"v",t:"सिद्ध कीजिए कि √2 अपरिमेय है।"},{b:"i",t:"दर्शाइए कि कोई धनात्मक विषम पूर्णांक 6q+1, 6q+3 या 6q+5 के रूप का होता है।"},{b:"b",t:"26 और 91 का LCM और HCF ज्ञात कीजिए और सत्यापित कीजिए।"}]},
+
+{id:1,n:2,nm:"बहुपद",cat:"algebra",desc:"बहुपद के शून्यक, शून्यकों और गुणांकों में संबंध, विभाजन एल्गोरिथम।",tags:["शून्यक","गुणांक","विभाजन"],
+notes:'<h3>1. बहुपद के प्रकार</h3><ul><li><strong>रैखिक:</strong> ax + b (घात 1)</li><li><strong>द्विघात:</strong> ax² + bx + c (घात 2)</li><li><strong>त्रिघात:</strong> ax³ + bx² + cx + d (घात 3)</li></ul><h3>2. शून्यक</h3><p>k बहुपद p(x) का शून्यक है यदि p(k) = 0</p><h3>3. द्विघात बहुपद ax²+bx+c के शून्यक α, β</h3><div class="fb"><div class="fm">शून्यकों का योग: α + β = -b/a</div><div class="fm">शून्यकों का गुणनफल: αβ = c/a</div></div>',
+fm:[{t:"α + β = -b/a",d:"शून्यकों का योग"},{t:"αβ = c/a",d:"शून्यकों का गुणनफल"},{t:"p(x) = g(x)·q(x) + r(x)",d:"विभाजन एल्गोरिथम"}],
+ex:[{ti:"x² - 3x + 2 के शून्यक ज्ञात कीजिए",st:["x² - 2x - x + 2 = 0","x(x-2) - 1(x-2) = 0","(x-1)(x-2) = 0","x = 1 या x = 2"],an:"शून्यक: α=1, β=2"}],
+mcq:[{q:"x²-5x+6 के शून्यक α,β; α+β=?",o:["5","-5","6","-6"],c:0,e:"-(-5)/1=5"},{q:"शून्यक 3 और -2 वाला बहुपद:",o:["x²-x-6","x²+x-6","x²-5x+6","x²+5x-6"],c:0,e:"योग=1, गुणनफल=-6"},{q:"y=x²-4x+4 x-अक्ष को कहाँ छूता है:",o:["x=0","x=2","x=4","x=-2"],c:1,e:"(x-2)²=0"},{q:"-1 यदि 2x²+3x+k का शून्यक, k=?",o:["1","-1","2","5"],c:0,e:"2-3+k=0, k=1"},{q:"शून्य बहुपद की घात:",o:["0","1","अपरिभाषित","∞"],c:2,e:"अपरिभाषित"}],
+imp:[{b:"v",t:"2x²-8x+6 के शून्यक ज्ञात कर संबंध सत्यापित कीजिए।"},{b:"b",t:"3x³+x²+2x+5 को x²+2x+1 से भाग दीजिए।"}]},
+
+{id:2,n:3,nm:"दो चर वाले रैखिक समीकरण युग्म",cat:"algebra",desc:"प्रतिस्थापन, विलोपन और वज्र-गुणन विधियाँ।",tags:["प्रतिस्थापन","विलोपन","वज्र-गुणन"],
+notes:'<h3>1. सामान्य रूप</h3><div class="fb"><div class="fm">a₁x + b₁y + c₁ = 0</div><div class="fm">a₂x + b₂y + c₂ = 0</div></div><h3>2. हल की शर्तें</h3><div class="fb"><div class="fm">a₁/a₂ ≠ b₁/b₂ → अद्वितीय हल</div><div class="fm">a₁/a₂ = b₁/b₂ = c₁/c₂ → अपरिमित हल</div><div class="fm">a₁/a₂ = b₁/b₂ ≠ c₁/c₂ → कोई हल नहीं</div></div>',
+fm:[{t:"a₁/a₂ ≠ b₁/b₂",d:"अद्वितीय हल"},{t:"a₁/a₂ = b₁/b₂ = c₁/c₂",d:"अपरिमित हल"},{t:"x/(b₁c₂-b₂c₁) = y/(c₁a₂-c₂a₁)",d:"वज्र-गुणन"}],
+ex:[{ti:"2x+3y=11 और x-2y=-12 हल कीजिए",st:["समीकरण 2 से: x = 2y-12","प्रतिस्थापन: 2(2y-12)+3y=11","4y-24+3y=11 → 7y=35 → y=5","x = 2(5)-12 = -2"],an:"x = -2, y = 5"}],
+mcq:[{q:"2x+3y=5 और 4x+6y=15:",o:["अद्वितीय","कोई नहीं","अपरिमित","दो"],c:1,e:"a₁/a₂=b₁/b₂≠c₁/c₂"},{q:"x+y=5, x-y=1, x=?",o:["2","3","4","1"],c:1,e:"जोड़ने पर: 2x=6"},{q:"2x+y=5 और 3x+2y=8:",o:["समांतर","संपाती","प्रतिच्छेदी","कोई नहीं"],c:2,e:"2/3≠1/2"},{q:"kx+2y=5 व 3x+6y=1 कोई हल नहीं, k=?",o:["1","2","3","4"],c:0,e:"k/3=2/6≠5/1"},{q:"योग=10, अंतर=2, संख्याएँ:",o:["4,6","3,7","5,5","2,8"],c:0,e:"x=6, y=4"}],
+imp:[{b:"v",t:"2x+3y=11, 2x-4y=-24 हल कर m ज्ञात कीजिए जहाँ y=mx+3।"},{b:"b",t:"k का मान ज्ञात कीजिए जिसके लिए 3x+y=1 और (2k-1)x+(k-1)y=2k+1 का कोई हल नहीं।"}]},
+
+{id:3,n:4,nm:"द्विघात समीकरण",cat:"algebra",desc:"मानक रूप, गुणनखंडन, श्रीधराचार्य सूत्र, मूलों की प्रकृति।",tags:["गुणनखंडन","श्रीधराचार्य","विविक्तकर"],
+notes:'<h3>1. मानक रूप</h3><div class="fb"><div class="fm">ax² + bx + c = 0 (a ≠ 0)</div></div><h3>2. श्रीधराचार्य सूत्र</h3><div class="fb"><div class="fm">x = (-b ± √(b²-4ac)) / 2a</div></div><h3>3. विविक्तकर D = b² - 4ac</h3><div class="fb"><div class="fm">D > 0 → दो भिन्न वास्तविक मूल</div><div class="fm">D = 0 → दो समान वास्तविक मूल</div><div class="fm">D < 0 → कोई वास्तविक मूल नहीं</div></div>',
+fm:[{t:"x = (-b ± √D) / 2a",d:"श्रीधराचार्य सूत्र"},{t:"D = b² - 4ac",d:"विविक्तकर"},{t:"मूलों का योग = -b/a",d:"मूलों का योग"},{t:"मूलों का गुणनफल = c/a",d:"मूलों का गुणनफल"}],
+ex:[{ti:"x² - 5x + 6 = 0 हल कीजिए",st:["x² - 3x - 2x + 6 = 0","x(x-3) - 2(x-3) = 0","(x-2)(x-3) = 0"],an:"x = 2 या x = 3"}],
+mcq:[{q:"x²-7x+12=0 के मूल:",o:["3,4","2,6","-3,-4","1,12"],c:0,e:"(x-3)(x-4)=0"},{q:"D=0, मूल:",o:["भिन्न वास्तविक","समान वास्तविक","काल्पनिक","कोई नहीं"],c:1,e:"D=0 → समान"},{q:"3x²+7x-6=0 मूलों का गुणनफल:",o:["7/3","-2","-7/3","2"],c:1,e:"c/a=-6/3=-2"},{q:"kx²+6x+1=0 समान मूल, k=?",o:["3","6","9","12"],c:2,e:"36-4k=0, k=9"},{q:"कोई वास्तविक मूल नहीं:",o:["x²-4x+4=0","x²+2x+1=0","x²+x+1=0","x²-5x+6=0"],c:2,e:"D=1-4=-3<0"}],
+imp:[{b:"v",t:"2x²-7x+3=0 के मूल श्रीधराचार्य सूत्र से ज्ञात कीजिए।"},{b:"v",t:"k ज्ञात कीजिए जिसके लिए 2x²+kx+3=0 के मूल समान हों।"},{b:"b",t:"एक संख्या और उसके व्युत्क्रम का योग 10/3 है। संख्या ज्ञात कीजिए।"}]},
+
+{id:4,n:5,nm:"समांतर श्रेढ़ियाँ",cat:"algebra",desc:"nवाँ पद, n पदों का योग, सार्व अंतर।",tags:["nवाँ पद","योग सूत्र","सार्व अंतर"],
+notes:'<h3>1. AP की परिभाषा</h3><p>ऐसी अनुक्रम जिसमें किन्हीं दो क्रमागत पदों का अंतर स्थिर (d) हो।</p><h3>2. nवाँ पद</h3><div class="fb"><div class="fm">aₙ = a + (n-1)d</div></div><h3>3. n पदों का योग</h3><div class="fb"><div class="fm">Sₙ = n/2 [2a + (n-1)d]</div><div class="fm">Sₙ = n/2 [a + l]</div></div>',
+fm:[{t:"aₙ = a + (n-1)d",d:"nवाँ पद"},{t:"Sₙ = n/2[2a+(n-1)d]",d:"n पदों का योग"},{t:"d = a₂ - a₁",d:"सार्व अंतर"}],
+ex:[{ti:"AP: 1,4,7,10... के प्रथम 20 पदों का योग",st:["a=1, d=3, n=20","S₂₀ = 20/2[2(1)+19(3)]","= 10[2+57] = 590"],an:"योग = 590"}],
+mcq:[{q:"2,7,12,17... का 10वाँ पद:",o:["47","42","52","37"],c:0,e:"2+9(5)=47"},{q:"3,1,-1,-3 का सार्व अंतर:",o:["2","-2","1","-1"],c:1,e:"1-3=-2"},{q:"प्रथम 10 प्राकृत संख्याओं का योग:",o:["45","55","50","100"],c:1,e:"10/2(1+10)=55"},{q:"aₙ=3n+2, d=?",o:["2","3","5","1"],c:1,e:"d=8-5=3"},{q:"AP:9,17,25... योग=636, पद:",o:["10","11","12","13"],c:2,e:"n=12"}],
+imp:[{b:"v",t:"AP का दूसरा पद 14 और तीसरा 18 है। प्रथम 51 पदों का योग ज्ञात कीजिए।"},{b:"b",t:"यदि Sₙ = 4n-n² तो प्रथम पद और 10वाँ पद ज्ञात कीजिए।"}]},
+
+{id:5,n:6,nm:"त्रिभुज",cat:"geometry",desc:"समरूप त्रिभुज, BPT, पाइथागोरस प्रमेय।",tags:["समरूपता","BPT","पाइथागोरस"],
+notes:'<h3>1. समरूपता की कसोटियाँ</h3><ul><li><strong>AAA:</strong> सभी कोण समान</li><li><strong>SAS:</strong> एक कोण समान, भुजाएँ समानुपाती</li><li><strong>SSS:</strong> सभी भुजाएँ समानुपाती</li></ul><h3>2. BPT (थेल्स प्रमेय)</h3><div class="fb"><div class="fm">यदि DE ∥ BC तो AD/DB = AE/EC</div></div><h3>3. क्षेत्रफल अनुपात</h3><div class="fb"><div class="fm">क्षे(Δ₁)/क्षे(Δ₂) = (भुजा₁/भुजा₂)²</div></div><h3>4. पाइथागोरस प्रमेय</h3><div class="fb"><div class="fm">कर्ण² = आधार² + लंब²</div></div>',
+fm:[{t:"AD/DB = AE/EC",d:"BPT"},{t:"क्षेत्रफल अनुपात = (भुजा अनुपात)²",d:"समरूप Δ क्षेत्रफल"},{t:"AC² = AB² + BC²",d:"पाइथागोरस"}],
+ex:[{ti:"DE∥BC, AD=4, DB=6, AE=8, EC=?",st:["BPT: AD/DB = AE/EC","4/6 = 8/EC","EC = 12"],an:"EC = 12 मात्रक"}],
+mcq:[{q:"भुजा अनुपात 2:3, क्षेत्रफल अनुपात:",o:["2:3","4:9","4:6","8:27"],c:1,e:"(2/3)²=4/9"},{q:"सीढ़ी 10m, खिड़की 8m, दूरी:",o:["5m","6m","7m","8m"],c:1,e:"d²=100-64=36"},{q:"समरूपता कसौटी नहीं:",o:["AAA","SAS","SSS","ASA"],c:3,e:"ASA सर्वांगसमता के लिए"},{q:"ΔABC~ΔDEF, AB=6,DE=9,BC=8, EF=?",o:["10","12","14","16"],c:1,e:"6/9=8/EF, EF=12"},{q:"पाइथागोरस विलोम:",o:["a²+b²=c²→समकोण","सभी समकोण","कोई नहीं","केवल समद्विबाहु"],c:0,e:"a²+b²=c² → कोण=90°"}],
+imp:[{b:"v",t:"BPT (थेल्स प्रमेय) कथन और उपपत्ति।"},{b:"v",t:"पाइथागोरस प्रमेय सिद्ध कीजिए।"},{b:"b",t:"यदि दो समरूप त्रिभुजों के क्षेत्रफल बराबर हैं तो सिद्ध करें कि वे सर्वांगसम हैं।"}]},
+
+{id:6,n:7,nm:"निर्देशांक ज्यामिति",cat:"geometry",desc:"दूरी सूत्र, विभाजन सूत्र, त्रिभुज का क्षेत्रफल।",tags:["दूरी","विभाजन","मध्यबिंदु"],
+notes:'<h3>1. दूरी सूत्र</h3><div class="fb"><div class="fm">d = √[(x₂-x₁)² + (y₂-y₁)²]</div></div><h3>2. विभाजन सूत्र</h3><div class="fb"><div class="fm">P = ((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))</div></div><h3>3. मध्यबिंदु</h3><div class="fb"><div class="fm">M = ((x₁+x₂)/2, (y₁+y₂)/2)</div></div>',
+fm:[{t:"d = √[(x₂-x₁)²+(y₂-y₁)²]",d:"दूरी सूत्र"},{t:"M = ((x₁+x₂)/2,(y₁+y₂)/2)",d:"मध्यबिंदु"},{t:"क्षे = ½|x₁(y₂-y₃)+x₂(y₃-y₁)+x₃(y₁-y₂)|",d:"त्रिभुज क्षेत्रफल"}],
+ex:[{ti:"A(3,8) और B(-2,-7) के बीच दूरी",st:["d = √[(-5)²+(-15)²]","= √[25+225] = √250"],an:"d = 5√10 मात्रक"}],
+mcq:[{q:"(0,0) से (3,4) दूरी:",o:["5","7","25","1"],c:0,e:"√(9+16)=5"},{q:"(2,3) और (4,7) का मध्यबिंदु:",o:["(3,5)","(6,10)","(2,4)","(3,4)"],c:0,e:"(3,5)"},{q:"(3,4) की मूलबिंदु से दूरी:",o:["5","7","25","12"],c:0,e:"√25=5"},{q:"क्षेत्रफल=0, बिंदु:",o:["संरेख","संगामी","समरूप","बराबर"],c:0,e:"क्षेत्रफल=0 → संरेख"},{q:"x-अक्ष पर y-निर्देशांक:",o:["0","1","x","-1"],c:0,e:"y=0"}],
+imp:[{b:"v",t:"(-1,7) और (4,-3) को 2:3 में विभाजित करने वाले बिंदु के निर्देशांक।"},{b:"b",t:"सिद्ध कीजिए कि (1,7),(4,2),(-1,-1),(-4,4) वर्ग के शीर्ष हैं।"}]},
+
+{id:7,n:8,nm:"त्रिकोणमिति का परिचय",cat:"trigonometry",desc:"त्रिकोणमितीय अनुपात, सर्वसमिकाएँ, विशिष्ट कोण।",tags:["sin/cos/tan","सर्वसमिका","विशिष्ट कोण"],
+notes:'<h3>1. त्रिकोणमितीय अनुपात</h3><div class="fb"><div class="fm">sin θ = लंब/कर्ण, cos θ = आधार/कर्ण, tan θ = लंब/आधार</div></div><h3>2. विशिष्ट कोणों पर मान</h3><div class="fb"><div class="fm">sin: 0°=0, 30°=½, 45°=1/√2, 60°=√3/2, 90°=1</div><div class="fm">cos: 0°=1, 30°=√3/2, 45°=1/√2, 60°=½, 90°=0</div></div><h3>3. सर्वसमिकाएँ</h3><div class="fb"><div class="fm">sin²θ + cos²θ = 1</div><div class="fm">1 + tan²θ = sec²θ</div><div class="fm">1 + cot²θ = cosec²θ</div></div>',
+fm:[{t:"sin θ = लंब/कर्ण",d:"ज्या"},{t:"cos θ = आधार/कर्ण",d:"कोज्या"},{t:"sin²θ + cos²θ = 1",d:"मूल सर्वसमिका"},{t:"1 + tan²θ = sec²θ",d:"sec सर्वसमिका"}],
+ex:[{ti:"sin θ = 3/5, cos θ और tan θ ज्ञात कीजिए",st:["लंब=3, कर्ण=5","आधार = √(25-9) = 4","cos θ = 4/5","tan θ = 3/4"],an:"cos θ = 4/5, tan θ = 3/4"}],
+mcq:[{q:"sin 60° =",o:["1/2","√3/2","1/√2","1"],c:1,e:"√3/2"},{q:"tan θ=1, θ=?",o:["30°","45°","60°","90°"],c:1,e:"tan 45°=1"},{q:"sin²30°+cos²30° =",o:["0","1/2","1","2"],c:2,e:"हमेशा=1"},{q:"sec²θ-tan²θ =",o:["0","1","-1","2"],c:1,e:"सर्वसमिका से=1"},{q:"cos 0° =",o:["0","1","1/2","√3/2"],c:1,e:"cos 0°=1"}],
+imp:[{b:"v",t:"सिद्ध: (sinθ)/(1+cosθ) + (1+cosθ)/sinθ = 2cosecθ"},{b:"b",t:"tan(A+B)=√3 और tan(A-B)=1/√3, A और B ज्ञात कीजिए।"}]},
+
+{id:8,n:9,nm:"त्रिकोणमिति के कुछ अनुप्रयोग",cat:"trigonometry",desc:"ऊँचाई और दूरियाँ, उन्नयन कोण, अवनति कोण।",tags:["उन्नयन","अवनति","ऊँचाई"],
+notes:'<h3>1. उन्नयन कोण</h3><p>क्षैतिज से ऊपर की ओर देखने पर बनने वाला कोण।</p><h3>2. अवनति कोण</h3><p>क्षैतिज से नीचे की ओर देखने पर बनने वाला कोण।</p><h3>3. सूत्र</h3><div class="fb"><div class="fm">tan θ = ऊँचाई / दूरी</div><div class="fm">ऊँचाई = दूरी × tan θ</div></div>',
+fm:[{t:"tan θ = ऊँचाई/दूरी",d:"मूल संबंध"},{t:"h = d × tan θ",d:"ऊँचाई"}],
+ex:[{ti:"छाया 50m, सूर्य का उन्नयन 30°, मीनार की ऊँचाई",st:["tan 30° = h/50","1/√3 = h/50","h = 50/√3"],an:"ऊँचाई = 50/√3 ≈ 28.87m"}],
+mcq:[{q:"उन्नयन 45°, दूरी 20m, ऊँचाई:",o:["10","20","20√3","40"],c:1,e:"20×tan45°=20"},{q:"छाया=ऊँचाई, कोण:",o:["30°","45°","60°","90°"],c:1,e:"tanθ=1"},{q:"इमारत 100m, अवनति 30°, दूरी:",o:["100√3","100","50","200"],c:0,e:"100/tan30°"},{q:"डोरी 100m, कोण 60°, ऊँचाई:",o:["50","50√3","100","100√3"],c:1,e:"100×sin60°"},{q:"50m से, उन्नयन 30°, ऊँचाई:",o:["50/√3","50√3","25","100"],c:0,e:"50×tan30°"}],
+imp:[{b:"v",t:"मीनार के तल और शिखर के उन्नयन कोण 45° और 60°। इमारत 7m। मीनार की ऊँचाई।"},{b:"b",t:"झील से 200m ऊपर बादल का उन्नयन 30° और प्रतिबिंब का अवनति 60°। बादल की ऊँचाई।"}]},
+
+{id:9,n:10,nm:"वृत्त",cat:"geometry",desc:"स्पर्श रेखा, स्पर्श रेखा के गुणधर्म।",tags:["स्पर्श रेखा","प्रमेय"],
+notes:'<h3>1. प्रमेय 10.1</h3><p>स्पर्श बिंदु पर स्पर्श रेखा, त्रिज्या के लंबवत होती है।</p><div class="fb"><div class="fm">OT ⊥ PT</div></div><h3>2. प्रमेय 10.2</h3><p>बाहरी बिंदु से खींची गई स्पर्श रेखाओं की लंबाइयाँ बराबर होती हैं।</p><div class="fb"><div class="fm">PA = PB</div></div>',
+fm:[{t:"OT ⊥ PT",d:"त्रिज्या ⊥ स्पर्श रेखा"},{t:"PA = PB",d:"बराबर स्पर्श रेखाएँ"},{t:"PT² = PO² - r²",d:"स्पर्श रेखा की लंबाई"}],
+ex:[{ti:"स्पर्श रेखा=12cm, त्रिज्या=5cm, OP=?",st:["OP² = 5² + 12² = 169","OP = 13"],an:"OP = 13 cm"}],
+mcq:[{q:"वृत्त के अंदर से स्पर्श रेखाएँ:",o:["0","1","2","3"],c:0,e:"कोई नहीं"},{q:"स्पर्श रेखा और त्रिज्या:",o:["समांतर","लंबवत","45°","संरेख"],c:1,e:"हमेशा लंबवत"},{q:"स्पर्श=24, r=7, OP=?",o:["25","31","17","23"],c:0,e:"√(49+576)=25"},{q:"PA=PB=8, PB=?",o:["4","8","16","अज्ञात"],c:1,e:"PA=PB"},{q:"वृत्त पर बिंदु से स्पर्श रेखाएँ:",o:["0","1","2","3"],c:1,e:"केवल 1"}],
+imp:[{b:"v",t:"सिद्ध कीजिए कि स्पर्श बिंदु पर त्रिज्या, स्पर्श रेखा के लंबवत होती है।"},{b:"b",t:"एक चतुर्भुज वृत्त को परिबद्ध करता है। सिद्ध करें AB+CD=AD+BC।"}]},
+
+{id:10,n:11,nm:"रचनाएँ",cat:"geometry",desc:"रेखाखंड का विभाजन, त्रिभुज की रचना, स्पर्श रेखा की रचना।",tags:["रचना","विभाजन","स्पर्श रेखा रचना"],
+notes:'<h3>1. रेखाखंड का दिए अनुपात में विभाजन</h3><p>m:n अनुपात में विभाजन के लिए m+n बराबर भाग बनाएँ।</p><h3>2. दिए त्रिभुज के समरूप त्रिभुज की रचना</h3><p>दिए गए स्केल गुणक के अनुसार भुजाएँ बनाएँ।</p><h3>3. वृत्त की स्पर्श रेखाओं की रचना</h3><p>बाहरी बिंदु से वृत्त पर स्पर्श रेखाएँ खींचने की विधि।</p>',
+fm:[{t:"विभाजन अनुपात m:n",d:"रेखाखंड विभाजन"},{t:"स्केल गुणक = n/m",d:"समरूप त्रिभुज"}],
+ex:[{ti:"7cm रेखाखंड को 2:3 में विभाजित कीजिए",st:["2+3=5 बराबर भाग बनाएँ","AX पर 5 बिंदु A₁,A₂,A₃,A₄,A₅","A₂ से समानांतर रेखा खींचें","विभाजन बिंदु प्राप्त"],an:"रेखाखंड 2:3 में विभाजित"}],
+mcq:[{q:"2:3 विभाजन के लिए कितने भाग?",o:["2","3","5","6"],c:2,e:"2+3=5"},{q:"स्पर्श रेखा रचना में कौन सा प्रमेय?",o:["BPT","पाइथागोरस","थेल्स","यूक्लिड"],c:0,e:"BPT"},{q:"समरूप त्रिभुज रचना, स्केल 3/4:",o:["3/4 गुना","4/3 गुना","3 गुना","4 गुना"],c:0,e:"3/4 गुना छोटा"},{q:"बाहरी बिंदु से स्पर्श रेखाएँ:",o:["0","1","2","3"],c:2,e:"हमेशा 2"},{q:"रचना में उपयोगी यंत्र:",o:["केवल पेंसिल","कंपास और स्केल","केवल रूलर","कुछ नहीं"],c:1,e:"कंपास और स्केल"}],
+imp:[{b:"v",t:"5cm भुजा वाले समबाहु त्रिभुज की रचना कीजिए।"},{b:"b",t:"एक वृत्त की रचना कीजिए और बाहरी बिंदु से स्पर्श रेखाएँ खींचिए।"}]},
+
+{id:11,n:12,nm:"वृत्तों से संबंधित क्षेत्रफल",cat:"mensuration",desc:"परिधि, क्षेत्रफल, त्रिज्यखंड, वृत्तखंड।",tags:["परिधि","त्रिज्यखंड","वृत्तखंड"],
+notes:'<h3>सूत्र</h3><div class="fb"><div class="fm">परिधि = 2πr</div><div class="fm">क्षेत्रफल = πr²</div><div class="fm">त्रिज्यखंड = (θ/360) × πr²</div><div class="fm">चाप = (θ/360) × 2πr</div><div class="fm">वृत्तखंड = त्रिज्यखंड - त्रिभुज</div></div>',
+fm:[{t:"C = 2πr",d:"परिधि"},{t:"A = πr²",d:"क्षेत्रफल"},{t:"त्रिज्यखंड = (θ/360)πr²",d:"त्रिज्यखंड क्षेत्रफल"},{t:"चाप = (θ/360)2πr",d:"चाप की लंबाई"}],
+ex:[{ti:"त्रिज्यखंड r=7, θ=60°",st:["A = (60/360)×(22/7)×49","= (1/6)×154"],an:"क्षेत्रफल ≈ 25.67 cm²"}],
+mcq:[{q:"r=14 परिधि:",o:["44","88","154","616"],c:1,e:"2×22/7×14=88"},{q:"d=28 क्षेत्रफल:",o:["616","154","308","88"],c:0,e:"π×14²=616"},{q:"त्रिज्यखंड r=21, θ=120°:",o:["462","1386","231","693"],c:0,e:"(120/360)×π×441=462"},{q:"C=44, क्षेत्रफल=?",o:["154","308","616","44"],c:0,e:"r=7, A=154"},{q:"चतुर्थांश क्षेत्रफल:",o:["πr²/2","πr²/4","πr²/3","πr²"],c:1,e:"90/360=1/4"}],
+imp:[{b:"b",t:"r=14 के वृत्त की जीवा केंद्र पर 60° बनाती है। लघु और दीर्घ वृत्तखंड के क्षेत्रफल।"}]},
+
+{id:12,n:13,nm:"पृष्ठीय क्षेत्रफल और आयतन",cat:"mensuration",desc:"संयुक्त ठोस, रूपांतरण, शंकु का छिन्नक।",tags:["बेलन","शंकु","गोला","छिन्नक"],
+notes:'<h3>प्रमुख सूत्र</h3><div class="fb"><div class="fm">बेलन: V=πr²h, TSA=2πr(r+h)</div><div class="fm">शंकु: V=⅓πr²h, CSA=πrl</div><div class="fm">गोला: V=4/3πr³, SA=4πr²</div><div class="fm">अर्धगोला: V=2/3πr³, TSA=3πr²</div></div><h3>शंकु का छिन्नक</h3><div class="fb"><div class="fm">V = (πh/3)(r₁²+r₂²+r₁r₂)</div><div class="fm">l = √(h²+(r₁-r₂)²)</div></div>',
+fm:[{t:"V(बेलन) = πr²h",d:"बेलन आयतन"},{t:"V(शंकु) = ⅓πr²h",d:"शंकु आयतन"},{t:"V(गोला) = 4/3πr³",d:"गोला आयतन"},{t:"V(छिन्नक) = (πh/3)(r₁²+r₂²+r₁r₂)",d:"छिन्नक आयतन"}],
+ex:[{ti:"शंकु+अर्धगोला, r=7, h=15, TSA",st:["l = √(49+225) ≈ 16.55","TSA = πrl + 2πr²","≈ 364+308 ≈ 672"],an:"TSA ≈ 672 cm²"}],
+mcq:[{q:"r=3 गोला आयतन:",o:["36π","108π","12π","27π"],c:0,e:"4/3×π×27=36π"},{q:"अर्धगोला TSA:",o:["2πr²","3πr²","4πr²","πr²"],c:1,e:"3πr²"},{q:"गोला त्रिज्या दुगनी, आयतन:",o:["2×","4×","6×","8×"],c:3,e:"r³→8×"},{q:"शंकु r=3,h=7:",o:["21π","63π","42π","7π"],c:0,e:"⅓×π×9×7=21π"},{q:"शंकु:बेलन अनुपात:",o:["1:2","1:3","2:3","3:1"],c:1,e:"⅓:1=1:3"}],
+imp:[{b:"b",t:"छिन्नक गिलास: ऊँचाई 14cm, व्यास 4cm और 2cm। धारिता ज्ञात कीजिए।"}]},
+
+{id:13,n:14,nm:"सांख्यिकी",cat:"statistics",desc:"माध्य, माध्यिका, बहुलक, तोरण।",tags:["माध्य","माध्यिका","बहुलक"],
+notes:'<h3>1. माध्य</h3><div class="fb"><div class="fm">x̄ = Σfᵢxᵢ / Σfᵢ</div></div><h3>2. माध्यिका</h3><div class="fb"><div class="fm">माध्यिका = l + [(n/2-cf)/f] × h</div></div><h3>3. बहुलक</h3><div class="fb"><div class="fm">बहुलक = l + [(f₁-f₀)/(2f₁-f₀-f₂)] × h</div></div><h3>4. अनुभवजन्य संबंध</h3><div class="fb"><div class="fm">3 माध्यिका = बहुलक + 2 माध्य</div></div>',
+fm:[{t:"x̄ = Σfᵢxᵢ/Σfᵢ",d:"माध्य"},{t:"माध्यिका = l+[(n/2-cf)/f]×h",d:"माध्यिका"},{t:"बहुलक = l+[(f₁-f₀)/(2f₁-f₀-f₂)]×h",d:"बहुलक"},{t:"3 माध्यिका = बहुलक + 2 माध्य",d:"अनुभवजन्य"}],
+ex:[{ti:"माध्य: CI 0-10,10-20,20-30,30-40; f: 5,8,7,10",st:["मध्यबिंदु: 5,15,25,35","Σfᵢxᵢ = 670, Σfᵢ = 30","x̄ = 670/30"],an:"माध्य = 22.33"}],
+mcq:[{q:"माध्यिका वर्ग: cf > ?",o:["n","n/2","n/4","2n"],c:1,e:"cf > n/2"},{q:"माध्य=20, बहुलक=14, माध्यिका=?",o:["18","16","17","22"],c:0,e:"3M=14+40→M=18"},{q:"सममित बंटन:",o:["माध्य>माध्यिका>बहुलक","सभी बराबर","माध्य<माध्यिका<बहुलक","कोई नहीं"],c:1,e:"तीनों बराबर"},{q:"तोरण प्रतिच्छेद:",o:["माध्य","माध्यिका","बहुलक","परिसर"],c:1,e:"प्रतिच्छेद = माध्यिका"},{q:"P(असंभव घटना):",o:["1","0","0.5","अपरिभाषित"],c:1,e:"हमेशा 0"}],
+imp:[{b:"v",t:"दिए बंटन का माध्य, माध्यिका और बहुलक ज्ञात कीजिए।"},{b:"b",t:"\'less than\' और \'more than\' तोरण बनाइए और माध्यिका ज्ञात कीजिए।"}]},
+
+{id:14,n:15,nm:"प्रायिकता",cat:"statistics",desc:"चिरसम्मत प्रायिकता, पूरक घटनाएँ, सिक्का, पासा, ताश।",tags:["प्रायिकता","सिक्का","पासा","ताश"],
+notes:'<h3>1. परिभाषा</h3><div class="fb"><div class="fm">P(E) = अनुकूल परिणाम / कुल परिणाम</div></div><h3>2. गुणधर्म</h3><div class="fb"><div class="fm">0 ≤ P(E) ≤ 1</div><div class="fm">P(E) + P(E नहीं) = 1</div></div><h3>3. मुख्य तथ्य</h3><ul><li>1 पासा: n(S) = 6</li><li>2 पासे: n(S) = 36</li><li>1 सिक्का: n(S) = 2</li><li>2 सिक्के: n(S) = 4</li><li>ताश: 52 पत्ते, 4 इक्के, 12 फेस कार्ड</li></ul>',
+fm:[{t:"P(E) = अनुकूल/कुल",d:"प्रायिकता"},{t:"P(E) + P(नहीं E) = 1",d:"पूरक"},{t:"0 ≤ P(E) ≤ 1",d:"परिसर"}],
+ex:[{ti:"दो पासे, P(योग=7)",st:["कुल = 36","अनुकूल: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6","P = 6/36"],an:"P(योग=7) = 1/6"}],
+mcq:[{q:"एक उछाल में P(head):",o:["1/4","1/3","1/2","1"],c:2,e:"1/2"},{q:"P(पासे पर सम):",o:["1/6","1/3","1/2","2/3"],c:2,e:"3/6=1/2"},{q:"P(E)=0.3, P(नहीं E)=?",o:["0.3","0.7","0.5","1.3"],c:1,e:"1-0.3=0.7"},{q:"ताश से P(बादशाह):",o:["1/52","1/13","4/13","1/4"],c:1,e:"4/52=1/13"},{q:"2 सिक्के, P(कम से कम 1 head):",o:["1/4","1/2","3/4","1"],c:2,e:"3/4"}],
+imp:[{b:"v",t:"दो पासे: (i) P(5 नहीं) (ii) P(कम से कम एक पर 5)।"},{b:"b",t:"52 पत्तों से: (i) P(लाल फेस) (ii) P(काला बादशाह) (iii) P(न इक्का न बादशाह)।"}]}
+];
+
+// PYQ
+var PYQ=[
+{y:2024,c:0,t:"यूक्लिड एल्गोरिथम से HCF(196, 38220) ज्ञात कीजिए।",b:"imp",s:"38220=196×195+0. HCF=196."},
+{y:2024,c:3,t:"2x²-7x+3=0 को पूर्ण वर्ग विधि से हल कीजिए।",b:"imp",s:"(x-7/4)²=25/16. x=3 या 1/2."},
+{y:2024,c:7,t:"sin²θ + cos²θ = 1 सिद्ध कीजिए।",b:"imp",s:"पाइथागोरस से: P²+B²=H². H² से भाग देने पर sin²θ+cos²θ=1."},
+{y:2023,c:0,t:"सिद्ध कीजिए कि √3 अपरिमेय है।",b:"rep",s:"माना √3=a/b. 3b²=a²→3|a. a=3c→b²=3c²→3|b. विरोधाभास!"},
+{y:2023,c:4,t:"AP का दूसरा पद 14, तीसरा 18. प्रथम 51 पदों का योग।",b:"imp",s:"d=4, a=10. S₅₁=51/2[20+200]=5610."},
+{y:2023,c:5,t:"पाइथागोरस प्रमेय का कथन और उपपत्ति।",b:"rep",s:"BD⊥AC. समरूपता: AB²=AD×AC, BC²=DC×AC. जोड़ने पर AB²+BC²=AC²."},
+{y:2023,c:14,t:"थैले में 5 लाल, 8 हरी, 7 सफेद। P(सफेद), P(हरी नहीं)।",b:"imp",s:"P(सफेद)=7/20. P(हरी नहीं)=12/20=3/5."},
+{y:2022,c:6,t:"y-अक्ष (5,-6) और (-1,-4) को किस अनुपात में विभाजित करती है?",b:"imp",s:"x=0: m(-1)+n(5)=0→m/n=5:1."},
+{y:2022,c:11,t:"त्रिज्यखंड r=6, θ=60° का क्षेत्रफल।",b:"imp",s:"A=(60/360)×π×36=6π≈18.85cm²."},
+{y:2022,c:12,t:"शंकु+अर्धगोला r=7, h=24. TSA ज्ञात कीजिए।",b:"brd",s:"l=25. TSA=πrl+2πr²=550+308=858cm²."},
+{y:2021,c:3,t:"योग=18, व्युत्क्रमों का योग=1/4. संख्याएँ ज्ञात कीजिए।",b:"rep",s:"x+y=18, xy=72. x²-18x+72=0. संख्याएँ: 6,12."},
+{y:2021,c:8,t:"100m से उन्नयन 60°. मीनार की ऊँचाई?",b:"imp",s:"h=100×tan60°=100√3≈173.2m."},
+{y:2020,c:0,t:"LCM और HCF(336, 54). सत्यापन: LCM×HCF=गुणनफल।",b:"rep",s:"HCF=6, LCM=3024. 6×3024=18144=336×54 ✓"},
+{y:2020,c:4,t:"AP:3,8,13,...,253 का अंतिम से 20वाँ पद।",b:"imp",s:"उल्टा: a=253,d=-5. a₂₀=253-95=158."}
+];
+
+// ===== STATE =====
+var TH = (function(){try{return localStorage.getItem('gg_theme')||'light'}catch(e){return'light'}})();
+var PR = (function(){try{return JSON.parse(localStorage.getItem('gg_prog')||'{}')}catch(e){return{}}})();
+var chId=0, chTab='notes', chFilt='all';
+var qz={qs:[],cur:0,ans:[],sel:null,tl:600,tmr:null};
+var pyqFlt={y:'all',c:'all'};
+
+// ===== INIT =====
+(function(){
+try{
+document.documentElement.setAttribute('data-theme',TH);
+buildFeat();buildQuick();buildChFilt();buildCh();buildNotes();buildFm();buildQzGrid();buildIQ();buildPyqF();buildPyq();
+}catch(e){console.error('Init:',e)}
+})();
+
+// ===== NAV =====
+function go(p,d){
+document.querySelectorAll('.pg').forEach(function(el){el.classList.remove('act')});
+var t=document.getElementById('pg-'+p);if(t)t.classList.add('act');
+document.querySelectorAll('.nl').forEach(function(n){n.classList.toggle('act',n.getAttribute('data-pg')===p)});
+closeM();window.scrollTo(0,0);
+if(p==='detail'&&d!==undefined)openDet(d);
+}
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');document.getElementById('ham').classList.toggle('open');document.getElementById('mobOv').classList.toggle('show')}
+function closeM(){document.getElementById('navLinks').classList.remove('open');document.getElementById('ham').classList.remove('open');document.getElementById('mobOv').classList.remove('show')}
+function toggleTheme(){TH=TH==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',TH);try{localStorage.setItem('gg_theme',TH)}catch(e){}toast(TH==='dark'?'🌙 डार्क मोड':'☀️ लाइट मोड')}
+function toast(m){var b=document.getElementById('toastBox'),t=document.createElement('div');t.className='toast';t.textContent=m;b.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove()},300)},2500)}
+
+// ===== HOME =====
+function buildFeat(){
+var f=[
+{i:'📚',t:'अध्यायवार नोट्स',d:'सभी 15 अध्यायों के विस्तृत नोट्स',p:'notes'},
+{i:'🧮',t:'महत्वपूर्ण सूत्र',d:'हर अध्याय के प्रमुख सूत्र',p:'formulas'},
+{i:'✏️',t:'हल किए हुए प्रश्न',d:'स्टेप-बाय-स्टेप हल',p:'chapters'},
+{i:'📝',t:'MCQ क्विज़',d:'इंटरैक्टिव क्विज़ से तैयारी जाँचें',p:'quiz'},
+{i:'🎯',t:'महत्वपूर्ण प्रश्न',d:'बोर्ड परीक्षा के लिए ज़रूरी',p:'important'},
+{i:'📋',t:'पिछले वर्षों के प्रश्न',d:'UP Board PYQ हल सहित',p:'pyq'}
+];
+document.getElementById('featGrid').innerHTML=f.map(function(x){return'<div class="feat" onclick="go(\''+x.p+'\')"><div class="feat-ico">'+x.i+'</div><h3>'+x.t+'</h3><p>'+x.d+'</p></div>'}).join('');
+}
+function buildQuick(){
+var ids=[0,3,4,7,14,12];
+document.getElementById('quickCh').innerHTML=ids.map(function(i){var c=C[i];return'<div style="min-width:240px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:20px;cursor:pointer;scroll-snap-align:start;transition:all .2s;flex-shrink:0" onclick="go(\'detail\','+i+')" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'var(--sh3)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'none\'"><div style="display:inline-block;padding:3px 10px;background:var(--g1);color:#fff;border-radius:var(--rf);font-size:.72rem;font-weight:700;margin-bottom:8px">अध्याय '+c.n+'</div><h4 style="font-size:.95rem;margin-bottom:4px">'+c.nm+'</h4><p style="font-size:.82rem;color:var(--tx2)">'+c.desc.substring(0,50)+'...</p></div>'}).join('');
+}
+
+// ===== CHAPTERS =====
+function buildChFilt(){
+var cats=[['all','सभी'],['algebra','बीजगणित'],['geometry','ज्यामिति'],['trigonometry','त्रिकोणमिति'],['mensuration','क्षेत्रमिति'],['statistics','सांख्यिकी']];
+document.getElementById('chFilter').innerHTML=cats.map(function(x){return'<button class="btn btn-sm '+(x[0]==='all'?'btn-p':'btn-s')+'" onclick="filtCh(\''+x[0]+'\',this)">'+x[1]+'</button>'}).join('');
+}
+function filtCh(cat,btn){chFilt=cat;document.querySelectorAll('#chFilter .btn').forEach(function(b){b.className='btn btn-sm btn-s'});btn.className='btn btn-sm btn-p';buildCh()}
+function buildCh(){
+var list=chFilt==='all'?C:C.filter(function(c){return c.cat===chFilt});
+document.getElementById('chGrid').innerHTML=list.map(function(c){
+var p=PR['ch'+c.id]||Math.floor(Math.random()*40+20);
+return'<div class="ch-card"><div class="ch-top"><div class="ch-n">'+c.n+'</div><div><h3>'+c.nm+'</h3></div></div><div class="ch-desc">'+c.desc+'</div><div class="ch-tags">'+c.tags.map(function(t){return'<span class="ch-tag">'+t+'</span>'}).join('')+'</div><div class="pbar"><div class="pfill" style="width:'+p+'%"></div></div><div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--tx3);margin:4px 0 14px"><span>'+p+'% पूर्ण</span><span>'+c.fm.length+' सूत्र</span></div><button class="btn btn-p btn-full" onclick="go(\'detail\','+c.id+')">📖 अध्याय पढ़ें</button></div>'}).join('');
+}
+
+// ===== NOTES =====
+function buildNotes(){
+document.getElementById('notesGrid').innerHTML=C.map(function(c){return'<div class="ch-card" style="cursor:pointer" onclick="go(\'detail\','+c.id+')"><div class="ch-top"><div class="ch-n">'+c.n+'</div><div><h3>'+c.nm+'</h3></div></div><div class="ch-desc">'+c.desc+'</div><button class="btn btn-p btn-sm" style="margin-top:8px">नोट्स पढ़ें →</button></div>'}).join('');
+}
+
+// ===== CHAPTER DETAIL =====
+function openDet(id){
+chId=id;var c=C[id];
+document.getElementById('cdHead').innerHTML='<h1>अध्याय '+c.n+': '+c.nm+'</h1><p>'+c.desc+'</p>';
+var tabs=[['notes','📖 नोट्स'],['formulas','🧮 सूत्र'],['examples','✏️ उदाहरण'],['mcq','📝 MCQ'],['important','⭐ महत्वपूर्ण']];
+document.getElementById('cdTabs').innerHTML=tabs.map(function(t){return'<button class="ct'+(t[0]==='notes'?' act':'')+'" data-t="'+t[0]+'" onclick="swTab(\''+t[0]+'\',this)">'+t[1]+'</button>'}).join('');
+document.getElementById('prevCh').style.visibility=id>0?'visible':'hidden';
+document.getElementById('nextCh').style.visibility=id<C.length-1?'visible':'hidden';
+swTab('notes');go('detail');
+}
+function swTab(tab,btn){
+chTab=tab;var c=C[chId];
+document.querySelectorAll('.ct').forEach(function(b){b.classList.remove('act')});
+if(btn)btn.classList.add('act');else{var el=document.querySelector('.ct[data-t="'+tab+'"]');if(el)el.classList.add('act')}
+var body=document.getElementById('cdBody');
+if(tab==='notes'){body.innerHTML='<div class="nt">'+c.notes+'</div>'}
+else if(tab==='formulas'){body.innerHTML='<h3 style="margin-bottom:16px">🧮 महत्वपूर्ण सूत्र</h3>'+c.fm.map(function(f){return'<div class="fb"><div class="fm">'+f.t+'</div><p style="font-size:.84rem;color:var(--tx2)">'+f.d+'</p></div>'}).join('')}
+else if(tab==='examples'){body.innerHTML='<h3 style="margin-bottom:16px">✏️ हल किए हुए उदाहरण</h3>'+c.ex.map(function(e){return'<div class="eb"><h4>'+e.ti+'</h4>'+e.st.map(function(s,i){return'<div class="step"><strong>चरण '+(i+1)+':</strong> '+s+'</div>'}).join('')+'<div class="fb" style="margin-top:10px;border-left-color:var(--ok)"><div class="fm" style="color:var(--ok)">✅ '+e.an+'</div></div></div>'}).join('')}
+else if(tab==='mcq'){body.innerHTML='<h3 style="margin-bottom:16px">📝 MCQ क्विज़</h3>'+c.mcq.map(function(q,i){return'<div class="qc" id="mc'+i+'"><div class="qn">प्रश्न '+(i+1)+'</div><div class="qt">'+q.q+'</div><div class="qo">'+q.o.map(function(o,j){return'<div class="qo-item" onclick="chkMC('+i+','+j+','+q.c+')">'+String.fromCharCode(65+j)+'. '+o+'</div>'}).join('')+'</div><div id="mcfb'+i+'" class="qfb"></div></div>'}).join('')}
+else if(tab==='important'){body.innerHTML='<h3 style="margin-bottom:16px">⭐ महत्वपूर्ण प्रश्न</h3>'+c.imp.map(function(q){var bc=q.b==='v'?'iq-v':q.b==='b'?'iq-b':'iq-i';var bt=q.b==='v'?'🔥 अति महत्वपूर्ण':q.b==='b'?'🎯 बोर्ड स्तर':'⭐ महत्वपूर्ण';return'<div class="eb"><span class="iq-badge '+bc+'">'+bt+'</span><p style="margin-top:8px;line-height:1.7">'+q.t+'</p></div>'}).join('')+'<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="go(\'quiz\')">📝 क्विज़ लें</button></div>'}
+}
+function chkMC(qi,sel,cor){
+var card=document.getElementById('mc'+qi);if(card.dataset.done)return;card.dataset.done='1';
+var opts=card.querySelectorAll('.qo-item');
+opts.forEach(function(o,i){if(i===cor)o.classList.add('ok');if(i===sel&&sel!==cor)o.classList.add('no');o.classList.add('dis')});
+var fb=document.getElementById('mcfb'+qi);fb.classList.add('show');
+var q=C[chId].mcq[qi];
+if(sel===cor){fb.style.background='rgba(5,150,105,.08)';fb.innerHTML='✅ सही! '+(q.e||'');toast('✅ सही जवाब!')}
+else{fb.style.background='rgba(220,38,38,.08)';fb.innerHTML='❌ गलत। उत्तर: '+String.fromCharCode(65+cor)+'. '+(q.e||'');toast('❌ गलत, व्याख्या देखें')}
+}
+function navCh(d){var n=chId+d;if(n>=0&&n<C.length)openDet(n)}
+
+// ===== FORMULAS =====
+function buildFm(){
+document.getElementById('fmSec').innerHTML=C.map(function(c){return'<div class="fm-ch"><div class="fm-ch-h" onclick="this.classList.toggle(\'col\');this.nextElementSibling.style.display=this.classList.contains(\'col\')?\'none\':\'grid\'"><span>अध्याय '+c.n+': '+c.nm+'</span><span class="arr">▼</span></div><div class="fm-items">'+c.fm.map(function(f){return'<div class="fm-item"><div><div class="ft">'+f.t+'</div><div class="fd">'+f.d+'</div></div><button class="fm-cp" onclick="cpF(this,\''+f.t.replace(/'/g,"\\'")+'\')">📋</button></div>'}).join('')+'</div></div>'}).join('');
+}
+function searchFm(){
+var q=document.getElementById('fmSearch').value.toLowerCase();
+document.querySelectorAll('.fm-item').forEach(function(el){el.style.display=el.textContent.toLowerCase().indexOf(q)>=0?'flex':'none'});
+document.querySelectorAll('.fm-items').forEach(function(el){el.style.display='grid'});
+document.querySelectorAll('.fm-ch-h').forEach(function(h){h.classList.remove('col')});
+}
+function cpF(btn,t){try{navigator.clipboard.writeText(t)}catch(e){}btn.textContent='✅';setTimeout(function(){btn.textContent='📋'},1500);toast('📋 कॉपी हुआ!')}
+
+// ===== QUIZ =====
+function buildQzGrid(){
+document.getElementById('quizGrid').innerHTML=C.map(function(c){return'<div class="ch-card" style="cursor:pointer" onclick="startQz('+c.id+')"><div class="ch-top"><div class="ch-n">'+c.n+'</div><div><h3>'+c.nm+'</h3></div></div><p style="font-size:.82rem;color:var(--tx3);margin-top:6px">'+c.mcq.length+' प्रश्न | 5 मिनट</p><button class="btn btn-p btn-sm" style="margin-top:10px">क्विज़ शुरू →</button></div>'}).join('');
+}
+function startQz(id){
+var c=C[id];qz.qs=c.mcq.slice().sort(function(){return Math.random()-.5});qz.cur=0;qz.ans=new Array(qz.qs.length).fill(-1);qz.sel=null;qz.tl=300;
+document.getElementById('quizSetup').style.display='none';
+var a=document.getElementById('quizArea');a.style.display='block';
+if(qz.tmr)clearInterval(qz.tmr);
+qz.tmr=setInterval(function(){qz.tl--;var te=document.getElementById('qzTmr');if(te){var m=Math.floor(qz.tl/60).toString().padStart(2,'0');var s=(qz.tl%60).toString().padStart(2,'0');te.textContent=m+':'+s}if(qz.tl<=0){clearInterval(qz.tmr);finQz()}},1000);
+renderQz();toast('📝 क्विज़ शुरू!');
+}
+function renderQz(){
+var q=qz.qs[qz.cur],total=qz.qs.length,cur=qz.cur,pct=((cur+1)/total*100);
+var m=Math.floor(qz.tl/60).toString().padStart(2,'0'),s=(qz.tl%60).toString().padStart(2,'0');
+document.getElementById('quizArea').innerHTML='<div class="timer-row"><div class="pbar"><div class="pfill" style="width:'+pct+'%"></div></div><span style="font-size:.85rem;color:var(--tx2)">'+(cur+1)+'/'+total+'</span><span class="timer" id="qzTmr">'+m+':'+s+'</span></div><div class="qc"><div class="qn">प्रश्न '+(cur+1)+' / '+total+'</div><div class="qt">'+q.q+'</div><div class="qo" id="qzO">'+q.o.map(function(o,i){return'<div class="qo-item" onclick="pickQz('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</div>'}).join('')+'</div><div id="qzFb" class="qfb"></div></div><button class="btn btn-p" id="qzNxt" onclick="nxtQz()" disabled style="margin-top:12px">'+(cur<total-1?'अगला प्रश्न →':'क्विज़ समाप्त ✓')+'</button>';
+}
+function pickQz(i){
+if(qz.sel!==null)return;qz.sel=i;qz.ans[qz.cur]=i;
+var q=qz.qs[qz.cur];var opts=document.querySelectorAll('#qzO .qo-item');
+opts.forEach(function(o,j){if(j===q.c)o.classList.add('ok');if(j===i&&i!==q.c)o.classList.add('no');o.classList.add('dis')});
+var fb=document.getElementById('qzFb');fb.classList.add('show');
+if(i===q.c){fb.style.background='rgba(5,150,105,.08)';fb.innerHTML='✅ सही! '+(q.e||'')}
+else{fb.style.background='rgba(220,38,38,.08)';fb.innerHTML='❌ उत्तर: '+String.fromCharCode(65+q.c)+'. '+(q.e||'')}
+document.getElementById('qzNxt').disabled=false;
+}
+function nxtQz(){qz.sel=null;if(qz.cur<qz.qs.length-1){qz.cur++;renderQz()}else finQz()}
+function finQz(){
+clearInterval(qz.tmr);var qs=qz.qs,ans=qz.ans,cor=0;
+qs.forEach(function(q,i){if(ans[i]===q.c)cor++});
+var total=qs.length,acc=Math.round(cor/total*100),used=300-qz.tl,m=Math.floor(used/60),s=used%60;
+document.getElementById('quizArea').innerHTML='<div class="res"><div class="res-sc">'+cor+'/'+total+'</div><div class="res-lb">'+(acc>=80?'🌟 उत्कृष्ट!':acc>=60?'👍 अच्छा!':'📚 और अभ्यास करें!')+'</div><div class="res-grid"><div class="rs"><b style="color:var(--ok)">'+cor+'</b><span>सही</span></div><div class="rs"><b style="color:var(--err)">'+(total-cor)+'</b><span>गलत</span></div><div class="rs"><b>'+acc+'%</b><span>सटीकता</span></div><div class="rs"><b>'+m+'m '+s+'s</b><span>समय</span></div></div><div class="res-btns"><button class="btn btn-p" onclick="resetQz()">फिर से करें</button><button class="btn btn-s" onclick="go(\'chapters\')">अध्याय</button></div></div>';
+toast('क्विज़: '+cor+'/'+total+' ('+acc+'%)',acc>=70?'success':'warning');
+}
+function resetQz(){document.getElementById('quizSetup').style.display='';document.getElementById('quizArea').style.display='none'}
+
+// ===== IMPORTANT Q =====
+function buildIQ(){
+var all=[];C.forEach(function(c){c.imp.forEach(function(q){all.push({ch:c.nm,t:q.t,b:q.b})})});
+document.getElementById('iqList').innerHTML=all.map(function(q){
+var bc=q.b==='v'?'iq-v':q.b==='b'?'iq-b':'iq-i';
+var bt=q.b==='v'?'🔥 अति महत्वपूर्ण':q.b==='b'?'🎯 बोर्ड स्तर':'⭐ महत्वपूर्ण';
+return'<div class="iq"><span class="iq-badge '+bc+'">'+bt+'</span><div class="iq-t">'+q.t+'</div><div class="iq-ch">📖 '+q.ch+'</div></div>'}).join('');
+}
+
+// ===== PYQ =====
+function buildPyqF(){
+document.getElementById('pyqF').innerHTML='<select id="pyqY" onchange="pyqFlt.y=this.value;buildPyq()"><option value="all">सभी वर्ष</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option></select><select id="pyqC" onchange="pyqFlt.c=this.value;buildPyq()"><option value="all">सभी अध्याय</option>'+C.map(function(c){return'<option value="'+c.id+'">अध्याय '+c.n+': '+c.nm+'</option>'}).join('')+'</select>';
+}
+function buildPyq(){
+var list=PYQ.filter(function(p){if(pyqFlt.y!=='all'&&p.y!==parseInt(pyqFlt.y))return false;if(pyqFlt.c!=='all'&&p.c!==parseInt(pyqFlt.c))return false;return true});
+document.getElementById('pyqL').innerHTML=list.length?list.map(function(p,i){
+var bc=p.b==='rep'?'b-rep':p.b==='brd'?'b-brd':'b-imp';
+var bt=p.b==='rep'?'🔁 बार-बार':p.b==='brd'?'🎯 बोर्ड':'⭐ महत्वपूर्ण';
+return'<div class="pyq-c"><div class="pyq-h"><span class="badge '+bc+'">'+bt+'</span><button class="btn btn-sm btn-s" onclick="document.getElementById(\'ps'+i+'\').classList.toggle(\'show\')">हल देखें</button></div><div class="pyq-meta">📅 '+p.y+' | 📖 '+C[p.c].nm+'</div><div style="font-size:.92rem;line-height:1.7">'+p.t+'</div><div class="pyq-sol" id="ps'+i+'"><strong>💡 हल:</strong> '+p.s+'</div></div>'}).join(''):'<div style="text-align:center;padding:40px;color:var(--tx3)"><p style="font-size:2.5rem;margin-bottom:8px">📭</p><p>कोई प्रश्न नहीं मिला।</p></div>';
+}
+</script>
+</body>
+</html>
